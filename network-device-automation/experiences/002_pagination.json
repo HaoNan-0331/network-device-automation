@@ -1,0 +1,24 @@
+{
+  "id": "002",
+  "category": "pagination",
+  "title": "H3C设备配置显示不完整 - 分页未处理",
+  "problem": "从H3C设备获取配置时，只能获取部分输出，输出中包含'---- More ----'提示符，配置被截断",
+  "symptoms": [
+    "输出被截断，只显示前24行",
+    "包含'---- More ----'分页提示符",
+    "获取的配置不完整"
+  ],
+  "root_cause": "H3C设备默认使用分页显示，每屏显示24行后暂停并显示'---- More ----'，需要用户按空格键继续",
+  "solution": "实现自动分页处理逻辑。检测到'---- More ----'时自动发送空格字符继续显示",
+  "code_example": "def handle_pagination(shell, timeout=60):\n    output = ''\n    while time.time() - start_time < timeout:\n        if shell.recv_ready():\n            chunk = shell.recv(65535).decode('utf-8', errors='ignore')\n            output += chunk\n            \n            # 检测分页提示符\n            if '---- More ----' in chunk:\n                shell.send(' ')  # 发送空格继续\n                time.sleep(0.3)\n                continue\n            \n            # 检测命令完成\n            if re.search(r'<\\w+>', chunk):\n                break\n    \n    return output",
+  "device_type": ["H3C", "Huawei", "HP"],
+  "prevention": "在通用执行器中，对于H3C/Huawei/HP设备，默认启用自动分页处理。将处理逻辑封装为可重用的函数",
+  "script_fix": "universal_executor.py中需要添加_handle_pagination方法，作为命令执行的默认行为。可以通过配置项控制是否启用：\nauto_pagination: true  # 默认启用",
+  "timestamp": "2026-01-16T18:30:00",
+  "verified": true,
+  "tags": ["H3C", "pagination", "分页", "配置截断"],
+  "test_environment": {
+    "device": "H3C S6850",
+    "software_version": "Comware 7.1.070, Alpha 7170"
+  }
+}

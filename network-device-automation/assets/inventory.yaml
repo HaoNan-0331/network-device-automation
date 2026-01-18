@@ -1,0 +1,125 @@
+# 网络设备资产台账
+# 此文件用于存储和管理网络设备资产信息
+#
+# 使用说明：
+# 1. 使用 python scripts/asset_manager.py 命令管理资产
+# 2. 密码使用 base64 编码存储（建议：敏感设备密码留空，使用时交互式输入）
+# 3. 支持通过 IP、主机名、设备名称/别名查找设备
+#
+# 设备字段说明：
+#   - name: 设备名称/别名（必填，用于快速查找）
+#   - host: IP地址或主机名（必填）
+#   - device_type: 设备类型（必填）参考：huawei, hp_comware, cisco_ios, ruijie_os
+#   - vendor: 厂商（可选）
+#   - model: 设备型号（可选）
+#   - username: 登录用户名（必填）
+#   - password: 登录密码 base64编码（可选，留空则交互式输入）
+#   - port: SSH端口（可选，默认22）
+#   - enable_password: 特权密码 base64编码（可选）
+#   - group: 设备分组（可选，用于批量操作）
+#   - description: 设备描述（可选）
+#   - location: 物理位置（可选）
+#   - contact: 负责人/联系方式（可选）
+#   - tags: 标签列表（可选，用于分类管理）
+#   - created_at: 创建日期
+#   - updated_at: 更新日期
+
+devices:
+  # 示例设备 - H3C核心交换机
+  core-sw-01:
+    name: "核心交换机-01"
+    host: "192.168.1.1"
+    device_type: "hp_comware"
+    vendor: "H3C"
+    model: "S6850"
+    username: "admin"
+    password: ""  # 留空表示需要交互式输入
+    port: 22
+    enable_password: ""
+    group: "core"
+    description: "核心交换机-机房A"
+    location: "机房A-机柜01"
+    contact: "张三"
+    tags:
+      - "core"
+      - "production"
+    created_at: "2025-01-17"
+    updated_at: "2025-01-17"
+
+  # 示例设备 - 华为接入交换机
+  access-sw-01:
+    name: "接入交换机-01"
+    host: "192.168.1.10"
+    device_type: "huawei"
+    vendor: "Huawei"
+    model: "S5735"
+    username: "admin"
+    password: ""
+    port: 22
+    enable_password: ""
+    group: "access"
+    description: "接入交换机-办公区"
+    location: "办公楼-3F-弱电间"
+    contact: "李四"
+    tags:
+      - "access"
+      - "office"
+    created_at: "2025-01-17"
+    updated_at: "2025-01-17"
+
+  # 示例设备 - 思科路由器
+  router-edge-01:
+    name: "出口路由器-01"
+    host: "192.168.1.254"
+    device_type: "cisco_ios"
+    vendor: "Cisco"
+    model: "ISR4431"
+    username: "admin"
+    password: ""
+    port: 22
+    enable_password: ""
+    group: "edge"
+    description: "出口路由器-ISP连接"
+    location: "机房A-机柜05"
+    contact: "王五"
+    tags:
+      - "edge"
+      - "critical"
+    created_at: "2025-01-17"
+    updated_at: "2025-01-17"
+
+  # H3C接入交换机 - 192.168.56.3
+  access-sw-56-3:
+    name: "接入交换机-56-3"
+    host: "192.168.56.3"
+    device_type: "hp_comware"
+    vendor: "H3C"
+    model: ""
+    username: "admin"
+    password: "WUNoQDIwMjUwMw=="
+    port: 22
+    enable_password: ""
+    group: "access"
+    description: "接入交换机-192.168.56.3"
+    location: ""
+    contact: ""
+    tags:
+      - "access"
+    created_at: "2025-01-17"
+    updated_at: "2025-01-17"
+
+# 设备分组定义（用于批量操作）
+groups:
+  core:
+    - "核心交换机组"
+
+  access:
+    - "接入层交换机组"
+
+  edge:
+    - "出口设备组"
+
+  all:
+    - "core"
+    - "access"
+    - "edge"

@@ -1,0 +1,24 @@
+{
+  "id": "004",
+  "category": "script_error",
+  "title": "SSH socket在配置保存时意外关闭",
+  "problem": "在执行save命令保存配置时，出现OSError: Socket is closed错误，导致配置无法保存",
+  "symptoms": [
+    "OSError: Socket is closed",
+    "在执行save命令时连接断开",
+    "配置保存失败"
+  ],
+  "root_cause": "在保存配置时，由于多次调用send_command导致socket超时或被设备关闭。可能原因：1) 连接空闲时间过长；2) 设备主动断开空闲连接；3) 发送命令间隔时间不当",
+  "solution": "使用save force命令代替交互式save，避免等待确认。或者增加连接超时时间，确保在timeout时间内完成保存",
+  "code_example": "# 错误方式 - 需要确认:\noutput = send_command(shell, 'save')  # 会等待用户输入y\n\n# 正确方式 - 强制保存:\noutput = send_command(shell, 'save force')  # 直接保存无需确认\n\n# 或者增加超时:\noutput = send_command(shell, 'save', timeout=60)",
+  "device_type": ["H3C", "Huawei"],
+  "prevention": "在通用执行器中，保存配置操作默认使用save force命令。在execute_commands方法中，检测到save命令自动添加force参数",
+  "script_fix": "universal_executor.py中的命令执行逻辑需要优化：\n1. 检测到save/write命令自动添加force参数\n2. 增加save命令的默认超时时间到60秒\n3. 在关键操作后立即执行保存，避免连接空闲超时",
+  "timestamp": "2026-01-16T18:30:00",
+  "verified": true,
+  "tags": ["socket", "save", "timeout", "connection_close"],
+  "test_environment": {
+    "device": "H3C S6850",
+    "software_version": "Comware 7.1.070, Alpha 7170"
+  }
+}

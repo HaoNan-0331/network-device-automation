@@ -1,0 +1,26 @@
+{
+  "id": "001",
+  "category": "command_execution",
+  "title": "H3C Comware V7使用exec_command导致命令执行超时",
+  "problem": "H3C Comware V7设备在使用SSH exec_command()方法执行命令时出现TimeoutError，导致命令无法正常执行",
+  "symptoms": [
+    "TimeoutError: [Errno 60] Connection timed out",
+    "命令执行后长时间无响应",
+    "exec_command返回空输出"
+  ],
+  "root_cause": "H3C Comware V7的SSH服务器对标准的SSH exec_command通道支持不完善，与标准SSH协议实现有差异，导致exec_command无法正常工作",
+  "solution": "使用invoke_shell()方法代替exec_command()。invoke_shell模拟真实的终端会话，更稳定可靠",
+  "code_example": "# 错误方式:\nstdin, stdout, stderr = ssh.exec_command('display version')\n\n# 正确方式:\nshell = ssh.invoke_shell()\ntime.sleep(2)  # 等待shell初始化\nshell.send('display version\\n')\ntime.sleep(2)  # 等待命令执行\noutput = shell.recv(65535).decode('utf-8', errors='ignore')",
+  "device_type": ["H3C", "HP"],
+  "prevention": "在脚本设计中，对于H3C设备强制使用invoke_shell()方法，避免使用exec_command()。在通用执行器中自动检测设备类型并选择合适的执行方式",
+  "script_fix": "universal_executor.py中的_execute_command方法需要根据设备类型自动选择执行方式：\n- H3C/HP: 使用invoke_shell\n- 其他厂商: 可以尝试exec_command，失败后fallback到invoke_shell",
+  "timestamp": "2026-01-16T18:30:00",
+  "verified": true,
+  "tags": ["H3C", "exec_command", "invoke_shell", "timeout", "Comware V7"],
+  "test_environment": {
+    "device": "H3C S6850",
+    "software_version": "Comware 7.1.070, Alpha 7170",
+    "python_version": "3.14",
+    "paramiko_version": "4.0.0"
+  }
+}

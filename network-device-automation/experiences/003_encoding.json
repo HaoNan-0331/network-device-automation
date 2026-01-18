@@ -1,0 +1,24 @@
+{
+  "id": "003",
+  "category": "encoding",
+  "title": "Windows平台GBK编码导致Unicode字符错误",
+  "problem": "在Windows平台上运行脚本时，使用Rich库输出特殊Unicode字符（如✓、✗）时出现UnicodeEncodeError: 'gbk' codec can't encode character",
+  "symptoms": [
+    "UnicodeEncodeError: 'gbk' codec can't encode character '\\u2713'",
+    "脚本在输出信息时崩溃",
+    "特殊字符无法正常显示"
+  ],
+  "root_cause": "Windows控制台默认使用GBK编码，不支持某些Unicode特殊字符。Rich库使用的特殊符号在GBK编码下无法转换",
+  "solution": "在Windows平台避免使用特殊Unicode字符，改用纯文本标记。或者使用errors='ignore'参数处理编码错误",
+  "code_example": "# 错误方式:\nfrom rich.console import Console\nconsole = Console()\nconsole.print('✓ 连接成功')  # Windows上报错\n\n# 正确方式:\nprint('[OK] 连接成功')  # 使用纯文本\n\n# 或者处理编码:\noutput = shell.recv(65535).decode('utf-8', errors='ignore')",
+  "device_type": ["通用"],
+  "prevention": "在脚本设计中：1) 避免使用特殊Unicode字符；2) 使用errors='ignore'处理解码；3) 提供简洁的文本输出模式",
+  "script_fix": "universal_executor.py中的日志输出模块需要：\n1. 检测操作系统平台\n2. Windows平台使用简单的[OK]/[ERROR]标记\n3. Linux/Mac可以使用特殊字符\n4. 所有decode操作添加errors='ignore'参数",
+  "timestamp": "2026-01-16T18:30:00",
+  "verified": true,
+  "tags": ["encoding", "Windows", "GBK", "Unicode"],
+  "test_environment": {
+    "os": "Windows 10",
+    "python_version": "3.14"
+  }
+}
