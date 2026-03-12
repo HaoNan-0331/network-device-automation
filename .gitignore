@@ -1,0 +1,26 @@
+# Python缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 资产台账（包含敏感设备信息）
+assets/inventory.yaml
+
+# 巡检报告（包含设备IP和配置信息）
+reports/inspections/
+
+# 临时文件
+*.tmp
+*.log
+*.bak
+.DS_Store
+Thumbs.db
+*.baiduyun.uploading.cfg
+
+# IDE配置
+.vscode/
+.idea/
+*.swp
+*.swo

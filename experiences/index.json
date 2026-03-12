@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-01-16T18:30:00",
+  "total_experiences": 4,
+  "categories": {
+    "command_execution": 1,
+    "pagination": 1,
+    "encoding": 1,
+    "script_error": 1,
+    "connection": 0
+  },
+  "experiences": [
+    {
+      "id": "001",
+      "category": "command_execution",
+      "title": "H3C Comware V7使用exec_command导致命令执行超时",
+      "timestamp": "2026-01-16T18:30:00",
+      "tags": ["H3C", "exec_command", "invoke_shell", "timeout", "Comware V7"],
+      "file": "001_command_execution.json"
+    },
+    {
+      "id": "002",
+      "category": "pagination",
+      "title": "H3C设备配置显示不完整 - 分页未处理",
+      "timestamp": "2026-01-16T18:30:00",
+      "tags": ["H3C", "pagination", "分页", "配置截断"],
+      "file": "002_pagination.json"
+    },
+    {
+      "id": "003",
+      "category": "encoding",
+      "title": "Windows平台GBK编码导致Unicode字符错误",
+      "timestamp": "2026-01-16T18:30:00",
+      "tags": ["encoding", "Windows", "GBK", "Unicode"],
+      "file": "003_encoding.json"
+    },
+    {
+      "id": "004",
+      "category": "script_error",
+      "title": "SSH socket在配置保存时意外关闭",
+      "timestamp": "2026-01-16T18:30:00",
+      "tags": ["socket", "save", "timeout", "connection_close"],
+      "file": "004_script_error.json"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+# 网络设备清单模板
+# 用于批量设备操作的设备定义文件
+
+# 设备列表
+devices:
+  # 示例1: 华为交换机
+  - host: "192.168.1.1"
+    device_type: "huawei"
+    username: "admin"
+    password: "your_password_here"
+    port: 22
+    enable_password: ""  # 如果需要enable密码
+    group: "core-switch"  # 设备分组（可选）
+    description: "核心交换机-1"
+
+  # 示例2: H3C交换机
+  - host: "192.168.1.2"
+    device_type: "hp_comware"
+    username: "admin"
+    password: "your_password_here"
+    port: 22
+    enable_password: ""
+    group: "access-switch"
+    description: "接入交换机-1"
+
+  # 示例3: 思科路由器
+  - host: "192.168.1.3"
+    device_type: "cisco_ios"
+    username: "admin"
+    password: "your_password_here"
+    port: 22
+    enable_password: "enable_secret_here"
+    group: "router"
+    description: "出口路由器"
+
+  # 示例4: 思科NX-OS交换机
+  - host: "192.168.1.4"
+    device_type: "cisco_nxos"
+    username: "admin"
+    password: "your_password_here"
+    port: 22
+    enable_password: ""
+    group: "data-center"
+    description: "数据中心核心"
+
+  # 示例5: 锐捷交换机
+  - host: "192.168.1.5"
+    device_type: "ruijie_os"
+    username: "admin"
+    password: "your_password_here"
+    port: 22
+    enable_password: ""
+    group: "access-switch"
+    description: "接入交换机-2"
+
+# 设备分组（可选，用于分组操作）
+groups:
+  core:
+    - "core-switch"
+
+  access:
+    - "access-switch"
+
+  all:
+    - "core-switch"
+    - "access-switch"
+    - "router"
+    - "data-center"
+
+# 配置说明
+# device_type 支持的类型:
+#   - 华为: huawei, huaweivrp
+#   - H3C: hp, hp_comware, comware
+#   - 思科IOS: cisco, cisco_ios
+#   - 思科NX-OS: cisco_nxos
+#   - 锐捷: ruijie, ruijie_os
+#   - Juniper: juniper, juniper_junos
+#
+# 连接参数:
+#   - host: 设备IP地址或主机名（必填）
+#   - device_type: 设备类型（必填）
+#   - username: 登录用户名（必填）
+#   - password: 登录密码（必填）
+#   - port: SSH端口（可选，默认22）
+#   - enable_password: 特权模式密码（可选）
+#   - group: 设备分组（可选）
+#   - description: 设备描述（可选）
+
+# 安全提示:
+# 1. 不要在版本控制中提交包含真实密码的文件
+# 2. 考虑使用加密的配置文件或环境变量
+# 3. 限制此文件的访问权限
+# 4. 定期更换密码
