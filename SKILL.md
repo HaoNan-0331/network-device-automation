@@ -211,6 +211,42 @@ python scripts/ruijie_executor.py --device 192.168.1.1 --commands "show version"
 - 与思科类似的CLI风格
 - **支持命令帮助查询**（`--query-help` / `--auto-help`）
 
+### 串口执行器（console 口运维）
+
+```bash
+# 直接指定串口
+python scripts/serial_executor.py --port COM3 --commands "display version" "display interface brief"
+
+# 从资产台账查找串口设备
+python scripts/serial_executor.py --device sw-console --commands "show running-config"
+
+# 指定波特率 + 多厂商命令（华为/思科/H3C 通用）
+python scripts/serial_executor.py --port COM3 --baud 9600 --commands "show ip route"
+
+# 遇错中断（默认每条都执行）
+python scripts/serial_executor.py --port COM3 --commands "show version" --stop-on-error
+```
+
+**串口执行器特点：**
+- 基于 pyserial，通过 **console 串口**连接（SSH/Telnet 不可用、或新设备开局/配置恢复时使用）
+- 自动处理分页：华为/H3C `---- More ----`、思科 `--More--`
+- 自动确认 `[Y/N]`、支持多行命令（`\n` 自动转 `\r\n`）
+- 与 SSH 执行器**统一接口**（`--device/--commands`，返回 JSON）
+- 资产台账登记串口设备：`device_type: serial`、`port: COM3`、`baud_rate: 9600`
+- 简易错误识别（含 `Error`/`Invalid`/`Unrecognized` 等标记 error 字段）
+
+**资产台账串口设备示例：**
+```yaml
+devices:
+  sw-console:
+    name: "S220-console"
+    device_type: serial
+    port: COM3
+    baud_rate: 9600
+    vendor: huawei
+    description: "S220 交换机 console 口"
+```
+
 ### 执行器返回格式
 
 所有执行器统一返回JSON格式：
