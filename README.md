@@ -1,3 +1,12 @@
+> [!IMPORTANT]
+> **🎉 本项目已演进为 [LinkPivot（灵枢）](https://github.com/HaoNan-0331/linkpivot-app) —— 网络拓扑管理 + AI 运维桌面应用**
+>
+> 本技能的设备连接、批量运维、健康巡检等核心能力已集成进 LinkPivot，并新增拓扑可视化、设备自动发现（ARP/路由）、SSH/Telnet/Web/RDP 会话管理、AI 运维助手（安全门禁）等特性。
+>
+> 👉 前往 **[linkpivot-app](https://github.com/HaoNan-0331/linkpivot-app)** 获取完整体验（Windows 安装包直接下载，开箱即用），欢迎 Star ⭐ 支持！
+
+---
+
  network-device-automation-skills介绍
 
   🎯 技能概述
@@ -200,3 +209,23 @@
   │ 节省                   │ ~90%         │
   └────────────────────────┴──────────────┘
   这个技能非常适合日常网络设备运维工作，特别是需要管理大量设备或频繁执行操作的场景！
+
+---
+
+## 🚀 推荐升级：LinkPivot（灵枢）
+
+本技能的设备连接与自动化运维能力，现已作为核心模块集成进桌面级产品 **[LinkPivot（灵枢）](https://github.com/HaoNan-0331/linkpivot-app)**：
+
+| 能力 | 本技能 | LinkPivot |
+|------|:---:|:---:|
+| 设备连接（SSH/Telnet/串口） | ✅ | ✅ |
+| 批量运维 / 巡检 / 配置管理 | ✅ | ✅ |
+| 网络拓扑可视化 | ❌ | ✅ |
+| 设备自动发现（ARP/路由表） | ❌ | ✅ |
+| Web / RDP 会话管理 | ❌ | ✅ |
+| AI 运维助手（含安全门禁） | ❌ | ✅ |
+| 使用形态 | 命令行 / Agent 技能 | Windows 桌面应用 |
+
+👉 **[立即体验 LinkPivot](https://github.com/HaoNan-0331/linkpivot-app)** —— 安装包直接下载，开箱即用，欢迎 Star ⭐ 支持！
+
+> 本仓库继续保留 Claude Code 技能（skill）形态，适合终端 / AI Agent 场景的轻量使用。
